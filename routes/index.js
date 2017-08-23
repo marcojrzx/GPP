@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 //var Incidencia= require('../app/models/maquina');
 var Curso = require('../app/models/curso');
+var Usuario = require('../app/models/usuario');
 
 var cron = require('cron');
 var passport = require('passport');
@@ -75,7 +76,7 @@ router.get('/', function(req, res){
 */
 
 // CREA UN CURSO SIN IMAGENES //
-router.route('/crea')
+router.route('/curso')
     .post( function(req, res){
       console.log('en ruta');
       console.log(req.body);
@@ -110,8 +111,44 @@ router.route('/crea')
 });
 
 
+// CREA UN usuario  //
+router.route('/usuario')
+    .post( function(req, res){
+      console.log('en ruta');
+      console.log(req.body);
+      console.log(req.params.id);
+      var usuario = new Usuario();
+                  usuario.nombre = req.body.nombre;
+                  usuario.pass = req.body.pass;
 
-router.route('/upload/:id')
+                  /***mampInicio****/
+                  usuario.save(function(err,rest){
+                    if(err){
+                      res.send("Error al guardar el usuario"+err);
+                    }else {
+                     console.log(" usuario guardado ");
+                    }
+                  });
+
+      res.json('usuario guardado');
+
+   })
+   .get( function(req, res){
+     console.log('en ruta');
+     Usuario.find(function (err, usuario){
+          if(err){
+            res.send(err);
+            console.log('errooorr');
+          }
+          res.json(usuario);
+
+
+  })
+});
+
+
+
+/*router.route('/upload/:id')
   .post(upload.single('avatar'), function(req, res){
     //console.log(req.file.pim);
     console.log(req.params.id);
@@ -127,7 +164,7 @@ router.route('/upload/:id')
  res.json("Correcto")
 
   })
-
+*/
   router.route('/uploads/:id')
     .post(upload.array('pim'), function(req, res){
       //console.log(req.file.pim);
@@ -145,9 +182,27 @@ router.route('/upload/:id')
 
     })
 
+    router.route('/uploadvideo/:id')
+      .post(upload.array('pim'), function(req, res){
+        //console.log(req.file.pim);
+        console.log(req.params.id);
+        f = req.files.length;
+        for (var i = 0; i < f; i++) {
+        Usuario.update({_id: req.params.id },{ $push: { "video": req.files[i].originalname } } , function (err, resta){
+         if(err){
+           res.send(err);
+           console.log('errooorr');
+         }
+    });
+     }
+     res.json("Correcto")
+
+      })
 
 
-  router.route('/download/:id/:nombre')
+
+
+  /*router.route('/download/:id/:nombre')
   .get( function(req, res){
 
   Maquina.find({_id:req.params.id} ,function (err, maquina){
@@ -181,6 +236,49 @@ router.route('/upload/:id')
 
 
 }) //download
+
+*/
+
+
+router.route('/downloadI/:id')
+.get( function(req, res){
+
+Curso.find({_id:req.params.id} ,function (err, curso){
+   if(err){
+    console.log('errooorr');
+     res.send(err);
+   }
+   console.log(curso);
+   v = curso.length;
+   console.log(v);
+   var sendarch;
+   for (var i = 0; i < v; i++) {
+     archivos = curso[i].imagenes;
+     for (var i = 0; i < archivos.length; i++) {
+          archivos[i] = 'localhost:8080/' + "" +archivos[i];
+        // console.log("file: "+file);
+         //res.download(file);
+         //res(file)
+
+     } //for1
+   }
+     res.json({archivos});
+  //maquina.find
+ });
+
+//var file = __dirname + '/upload-folder/dramaticpenguin.MOV';
+//res.download(file);
+
+
+}) //download2
+
+
+
+
+
+
+
+
 
 router.route('/downloadf/:id')
 .get( function(req, res){

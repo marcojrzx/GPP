@@ -14,6 +14,7 @@ mongoose.connect('mongodb://localhost:27017/PP2')
 
 app.use(cors());
 app.use(morgan('combined'));
+app.use(express.static('uploads'));
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
