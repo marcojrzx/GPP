@@ -36,13 +36,27 @@ var storage = multer.diskStorage({
   }
 })
 
+var storage2 = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    var d = new Date();
+    var xx = d.getTime();
+    cb(null, file.originalname+xx+".webm")
+  }
+})
 
 var upload = multer({ storage: storage  })
+var upload2 = multer({ storage: storage2  })
+
 //var upload = multer({ dest: 'uploads/' })
 
 
 router.use(function(req,res,next){
   console.log('>> api');
+  console.log("request");
+  console.log(req);
   next();
 })
 
@@ -167,7 +181,7 @@ router.route('/usuario')
 */
   router.route('/uploads/:id')
     .post(upload.array('pim'), function(req, res){
-      //console.log(req.file.pim);
+      console.log("uploads");
       console.log(req.params.id);
       f = req.files.length;
       for (var i = 0; i < f; i++) {
@@ -183,12 +197,14 @@ router.route('/usuario')
     })
 
     router.route('/uploadvideo/:id')
-      .post(upload.array('pim'), function(req, res){
+      .post(upload2.array('pim'), function(req, res){
+        //console.log(req);
+        console.log(req.files);
         //console.log(req.file.pim);
         console.log(req.params.id);
         f = req.files.length;
         for (var i = 0; i < f; i++) {
-        Usuario.update({_id: req.params.id },{ $push: { "video": req.files[i].originalname } } , function (err, resta){
+        Usuario.update({_id: req.params.id },{ $push: { "video": req.files[i].filename } } , function (err, resta){
          if(err){
            res.send(err);
            console.log('errooorr');
@@ -199,8 +215,28 @@ router.route('/usuario')
 
       })
 
+      router.post('/submit_record', (req, res) => {
+        req.pipe(fs.createWriteStream('uploads/myFile.webm'))
+          .on('error', (e) => res.status(500).end(e.message))
+          .on('close', () => res.end('File saved'))
+      })
 
+      router.route('/upload/:id')
+        .post(upload.single('avatar'), function(req, res){
+          //console.log(req.file.pim);
+          console.log(req.params.id);
+          //f = req.files.length;
+          //for (var i = 0; i < f; i++) {
+          Curso.update({_id: req.params.id },{ $push: { "imagenes": req.file.originalname } } , function (err, resta){
+           if(err){
+             res.send(err);
+             console.log('errooorr');
+           }
+      });
+       //}
+       res.json("Correcto")
 
+        })
 
   /*router.route('/download/:id/:nombre')
   .get( function(req, res){
@@ -255,7 +291,8 @@ Curso.find({_id:req.params.id} ,function (err, curso){
    for (var i = 0; i < v; i++) {
      archivos = curso[i].imagenes;
      for (var i = 0; i < archivos.length; i++) {
-          archivos[i] = 'localhost:8080/' + "" +archivos[i];
+          console.log(archivos[i]);
+          archivos[i] = 'http://localhost:8050/static/' + "" +archivos[i];
         // console.log("file: "+file);
          //res.download(file);
          //res(file)
