@@ -203,7 +203,7 @@ router.route('/usuario')
         console.log(req.params.id);
         f = req.files.length;
         for (var i = 0; i < f; i++) {
-        Usuario.update({_id: req.params.id },{ $push: { "video": "testt" } } , function (err, resta){
+        Usuario.update({_id: req.params.id },{ $push: { "video": req.files[i].filename } } , function (err, resta){
          if(err){
            res.send(err);
            console.log('errooorr');
