@@ -56,7 +56,6 @@ var upload2 = multer({ storage: storage2  })
 router.use(function(req,res,next){
   console.log('>> api');
   console.log("request");
-  console.log(req);
   next();
 })
 
