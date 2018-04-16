@@ -291,7 +291,7 @@ Curso.find({_id:req.params.id} ,function (err, curso){
      archivos = curso[i].imagenes;
      for (var i = 0; i < archivos.length; i++) {
           console.log(archivos[i]);
-          archivos[i] = 'http://localhost:8050/static/' + "" +archivos[i];
+          archivos[i] = 'http://138.68.7.40:8050/static/' + "" +archivos[i];
         // console.log("file: "+file);
          //res.download(file);
          //res(file)
