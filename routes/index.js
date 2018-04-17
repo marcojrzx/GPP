@@ -159,25 +159,37 @@ router.route('/usuario')
   })
 });
 
+router.route('/usuarioCurso/:id')
+    .post( function(req, res){
+      console.log('en ruta usuarioCurso');
+      console.log(req.body);
+      console.log(req.params.id);
+      Usuario.update({_id: req.params.id },{ $set: { "prueba": req.body.curso } } , function (err, usuario){
+       if(err){
+         res.send(err);
+         console.log('errooorr');
+       }
+       res.json('usuario guardado');
+     });
 
 
-/*router.route('/upload/:id')
-  .post(upload.single('avatar'), function(req, res){
-    //console.log(req.file.pim);
-    console.log(req.params.id);
-    //f = req.files.length;
-    //for (var i = 0; i < f; i++) {
-    Curso.update({_id: req.params.id },{ $push: { "imagenes": req.file.originalname } } , function (err, resta){
-     if(err){
-       res.send(err);
-       console.log('errooorr');
-     }
-});
- //}
- res.json("Correcto")
+   })
+   .get( function(req, res){
+     console.log('en ruta');
+     Usuario.find(function (err, usuario){
+          if(err){
+            res.send(err);
+            console.log('errooorr');
+          }
+          res.json(usuario);
+
 
   })
-*/
+});
+
+
+
+
   router.route('/uploads/:id')
     .post(upload.array('pim'), function(req, res){
       console.log("uploads");
@@ -203,7 +215,7 @@ router.route('/usuario')
         console.log(req.params.id);
         f = req.files.length;
         for (var i = 0; i < f; i++) {
-        Usuario.update({_id: req.params.id },{ $push: { "video": req.files[i].filename } } , function (err, resta){
+        Usuario.update({_id: req.params.id },{ $set: { "video": req.files[i].filename } } , function (err, resta){
          if(err){
            res.send(err);
            console.log('errooorr');
@@ -237,42 +249,7 @@ router.route('/usuario')
 
         })
 
-  /*router.route('/download/:id/:nombre')
-  .get( function(req, res){
 
-  Maquina.find({_id:req.params.id} ,function (err, maquina){
-     if(err){
-      console.log('errooorr');
-       res.send(err);
-     }
-     v = maquina.length;
-     console.log(v);
-     for (var i = 0; i < v; i++) {
-       archivos = maquina[i].manuales;
-       for (var i = 0; i < archivos.length; i++) {
-         if (archivos[i] == req.params.nombre) {
-           file = '/home/marco/Documentos/uni/proyectos_2/server/uploads/' + "" +archivos[i];
-           console.log("file: "+file);
-           //res.download(file);
-           //res(file)
-           fs.readFile(file, function (err,data){
-          res.contentType("application/pdf");
-          res.send(data);
-        }); //fs
-
-
-         }//if
-       } //for
-    }
-
-
-   });
-
-
-
-}) //download
-
-*/
 
 
 router.route('/downloadI/:id')
@@ -292,46 +269,6 @@ Curso.find({_id:req.params.id} ,function (err, curso){
      for (var i = 0; i < archivos.length; i++) {
           console.log(archivos[i]);
           archivos[i] = 'http://138.68.7.40:8050/static/' + "" +archivos[i];
-        // console.log("file: "+file);
-         //res.download(file);
-         //res(file)
-
-     } //for1
-   }
-     res.json({archivos});
-  //maquina.find
- });
-
-//var file = __dirname + '/upload-folder/dramaticpenguin.MOV';
-//res.download(file);
-
-
-}) //download2
-
-
-
-
-
-
-
-
-
-router.route('/downloadf/:id')
-.get( function(req, res){
-
-Maquina.find({_id:req.params.id} ,function (err, maquina){
-   if(err){
-    console.log('errooorr');
-     res.send(err);
-   }
-   console.log(maquina);
-   v = maquina.length;
-   console.log(v);
-   var sendarch;
-   for (var i = 0; i < v; i++) {
-     archivos = maquina[i].manuales;
-     for (var i = 0; i < archivos.length; i++) {
-          archivos[i] = '/home/marco/Documentos/uni/proyectos_2/server/uploads/' + "" +archivos[i];
         // console.log("file: "+file);
          //res.download(file);
          //res(file)
@@ -370,24 +307,6 @@ Maquina.find({_id:req.params.id} ,function (err, maquina){
 
   });
 
-  // ELIMINA PDF
-  router.route('/pdfElimina/:id')
-  .post( function(req, res){
-    console.log('en ruta');
-    console.log(req.body);
-    console.log(req.params.id);
-    Maquina.update({_id: req.params.id },{ $pull: { "manuales": req.body.manual  } }, { safe: true },  function (err, resta){
-     if(err){
-       res.send(err);
-       console.log('errooorr');
-     }
-
-   console.log(resta);
-  });
-
-    res.json('todo bueno');
-
-  });
 
 
 
