@@ -142,7 +142,7 @@ router.route('/usuarioLog')
 
    // LOGUEO usuario
    router.route('/usuarioOne/:id')
-       .post( function(req, res){
+       .get( function(req, res){
          console.log('en ruta');
          console.log(req.body);
          console.log(req.params);
