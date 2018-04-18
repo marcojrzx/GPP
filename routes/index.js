@@ -155,6 +155,7 @@ router.route('/usuario')
                   usuario.nombre = req.body.nombre;
                   usuario.pass = req.body.pass;
                   usuario.correo = req.body.correo;
+                  usuario.tipo = req.body.tipo;
 
                   /***mampInicio****/
                   usuario.save(function(err,rest){
