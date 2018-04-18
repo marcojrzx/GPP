@@ -124,24 +124,21 @@ router.route('/curso')
 });
 // LOGUEO usuario
 router.route('/usuarioLog')
-    .post( function(req, res){
+    .get( function(req, res){
       console.log('en ruta');
       console.log(req.body);
       console.log(req.params.id);
-      var usuario = new Usuario();
-                  usuario.nombre = req.body.nombre;
-                  usuario.pass = req.body.pass;
 
-                  /***mampInicio****/
-                  usuario.save(function(err,rest){
+                  Usuario.find({ $and: [ { correo: req.params.correo }, { pass: req.params.pass }, { tipo:"1" } ] }  ,function(err,usuario){
                     if(err){
-                      res.send("Error al guardar el usuario"+err);
+                      res.send("Error al logueo el usuario"+err);
                     }else {
-                     console.log(" usuario guardado ");
-                    }
+                     console.log(" usuario logueado ");
+                     res.json(usuario);
+                   }
                   });
 
-      res.json('usuario guardado');
+
 
    })
 
