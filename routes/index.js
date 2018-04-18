@@ -171,7 +171,7 @@ router.route('/usuario')
    })
    .get( function(req, res){
      console.log('en ruta');
-     Usuario.find(function (err, usuario){
+     Usuario.find({ tipo: { $ne: 1 } }, function (err, usuario){
           if(err){
             res.send(err);
             console.log('errooorr');
