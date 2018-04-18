@@ -4,6 +4,7 @@ var UsuarioSchema = new Schema({
     nombre: String,
     video: String,
     prueba: String,
-    pass: String
+    pass: String,
+    correo: String
 });
 module.exports = mongoose.model('Usuario', UsuarioSchema);

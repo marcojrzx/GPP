@@ -122,7 +122,28 @@ router.route('/curso')
 
   })
 });
+// LOGUEO usuario
+router.route('/usuarioLog')
+    .post( function(req, res){
+      console.log('en ruta');
+      console.log(req.body);
+      console.log(req.params.id);
+      var usuario = new Usuario();
+                  usuario.nombre = req.body.nombre;
+                  usuario.pass = req.body.pass;
 
+                  /***mampInicio****/
+                  usuario.save(function(err,rest){
+                    if(err){
+                      res.send("Error al guardar el usuario"+err);
+                    }else {
+                     console.log(" usuario guardado ");
+                    }
+                  });
+
+      res.json('usuario guardado');
+
+   })
 
 // CREA UN usuario  //
 router.route('/usuario')
@@ -133,6 +154,7 @@ router.route('/usuario')
       var usuario = new Usuario();
                   usuario.nombre = req.body.nombre;
                   usuario.pass = req.body.pass;
+                  usuario.correo = req.body.correo;
 
                   /***mampInicio****/
                   usuario.save(function(err,rest){
@@ -285,27 +307,6 @@ Curso.find({_id:req.params.id} ,function (err, curso){
 
 }) //download2
 
-
-   // NUEVOCAMBIO 2 AGREGADA RUTA
-   /// >>> ELIMINA LA MAQUINA   <<<
-   router.route('/maquinaDelate/:id')
-   .post( function(req, res){
-     console.log('en ruta');
-     console.log(req.body);
-     console.log(req.params.id);
-
-     Maquina.remove({_id: req.params.id }, function (err, maquina){
-      if(err){
-        res.send(err);
-        console.log('errooorr');
-      }
-
-    console.log(maquina);
-  });
-
-     res.json('todo bueno');
-
-  });
 
 
 
