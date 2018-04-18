@@ -140,6 +140,25 @@ router.route('/usuarioLog')
 
    })
 
+   // LOGUEO usuario
+   router.route('/usuarioOne/:id')
+       .post( function(req, res){
+         console.log('en ruta');
+         console.log(req.body);
+         console.log(req.params);
+
+                     Usuario.find({ _id: req.params.id }  ,function(err,usuario){
+                       if(err){
+                         res.send("Error al logueo el usuario"+err);
+                       }
+                       res.json(usuario);
+                     });
+
+
+
+      })
+
+
 // CREA UN usuario  //
 router.route('/usuario')
     .post( function(req, res){
