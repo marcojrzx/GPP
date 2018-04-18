@@ -124,10 +124,10 @@ router.route('/curso')
 });
 // LOGUEO usuario
 router.route('/usuarioLog')
-    .get( function(req, res){
+    .post( function(req, res){
       console.log('en ruta');
       console.log(req.body);
-      console.log(req.params.id);
+      console.log(req.params);
 
                   Usuario.find({ $and: [ { correo: req.params.correo }, { pass: req.params.pass }, { tipo:"1" } ] }  ,function(err,usuario){
                     if(err){
