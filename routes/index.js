@@ -129,7 +129,7 @@ router.route('/usuarioLog')
       console.log(req.body);
       console.log(req.params);
 
-                  Usuario.find({ $and: [ { correo: req.body.correo }, { pass: req.body.pass }, { tipo:"1" } ] }  ,function(err,usuario){
+                  Usuario.find({ $and: [ { correo: req.body.correo }, { pass: req.body.pass } ] }  ,function(err,usuario){
                     if(err){
                       res.send("Error al logueo el usuario"+err);
                     }
