@@ -93,7 +93,7 @@ router.route('/producto')
    })
    .get( function(req, res){
      console.log('en ruta');
-     Curso.find(function (err, curso){
+     Producto.find(function (err, curso){
           if(err){
             res.send(err);
             console.log('errooorr');
@@ -206,7 +206,7 @@ router.route('/usuarioCurso/:id')
 });
 
 
-
+*/
 
   router.route('/uploads/:id')
     .post(upload.array('pim'), function(req, res){
@@ -214,7 +214,7 @@ router.route('/usuarioCurso/:id')
       console.log(req.params.id);
       f = req.files.length;
       for (var i = 0; i < f; i++) {
-      Curso.update({_id: req.params.id },{ $push: { "imagenes": req.files[i].originalname } } , function (err, resta){
+      Producto.update({_id: req.params.id },{ $push: { "imagenes": req.files[i].originalname } } , function (err, resta){
        if(err){
          res.send(err);
          console.log('errooorr');
@@ -224,6 +224,8 @@ router.route('/usuarioCurso/:id')
    res.json("Correcto")
 
     })
+
+    /*
 
     router.route('/uploadvideo/:id')
       .post(upload2.array('pim'), function(req, res){
