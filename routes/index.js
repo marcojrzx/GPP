@@ -78,7 +78,7 @@ router.route('/producto')
                   producto.precio = req.body.precio;
                   producto.descripcion = req.body.descripcion;
                   producto.tamanio = req.body.precio;
-v
+
                   /***mampInicio****/
                   producto.save(function(err,rest){
                     if(err){
