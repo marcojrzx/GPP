@@ -3,8 +3,8 @@ var express = require('express');
 var mongoose = require('mongoose');
 
 //var Incidencia= require('../app/models/maquina');
-var Curso = require('../app/models/curso');
-var Usuario = require('../app/models/usuario');
+var Producto = require('../app/models/producto');
+
 
 var cron = require('cron');
 var passport = require('passport');
@@ -62,48 +62,29 @@ router.use(function(req,res,next){
 
 
 router.get('/', function(req, res){
-     res.json({message: 'Bienvenido a nuestra api'});
+     res.json({message: 'Bienvenido a nuestra api pG'});
   });
 
 
-/*router.route('/login')
-     .get( passport.authenticate('basic', { session: false }), function(req,res){
-       res.json(req.user)
-    })
-*/
 
-/*router.route('/encuentra/:id')
-.get( function(req,res){
-    console.log("get encuentra maquina");
-    console.log("ident");
-    console.log(req.params.id);
-    Maquina.find({"modelo": req.params.id}, function (err, maquina){
-     if(err)
-       res.send(err);
-
-     res.json(maquina);
-     console.log(maquina);
-   });
-    });
-
-*/
-
-// CREA UN CURSO SIN IMAGENES //
-router.route('/curso')
+// CREA UN producto //
+router.route('/producto')
     .post( function(req, res){
       console.log('en ruta');
       console.log(req.body);
-      console.log(req.params.id);
-      var curso = new Curso();
-                  curso.nombre = req.body.nombre;
-                  curso.lenguaje = req.body.lenguaje;
-
+      var producto = new Producto();
+                  producto.nombre = req.body.nombre;
+                  producto.categoria = req.body.categoria;
+                  producto.precio = req.body.precio;
+                  producto.descripcion = req.body.descripcion;
+                  producto.tamanio = req.body.precio;
+v
                   /***mampInicio****/
-                  curso.save(function(err,rest){
+                  producto.save(function(err,rest){
                     if(err){
-                      res.send("Error al guardar el curso"+err);
+                      res.send("Error al guardar el producto"+err);
                     }else {
-                     console.log("guardado el curso");
+                     console.log("guardado el producto");
                     }
                   });
 
@@ -123,7 +104,7 @@ router.route('/curso')
   })
 });
 // LOGUEO usuario
-router.route('/usuarioLog')
+/*router.route('/usuarioLog')
     .post( function(req, res){
       console.log('en ruta');
       console.log(req.body);
@@ -172,7 +153,7 @@ router.route('/usuario')
                   usuario.tipo = req.body.tipo;
 
                   /***mampInicio****/
-                  usuario.save(function(err,rest){
+              /*    usuario.save(function(err,rest){
                     if(err){
                       res.send("Error al guardar el usuario"+err);
                     }else {
@@ -323,7 +304,7 @@ Curso.find({_id:req.params.id} ,function (err, curso){
 }) //download2
 
 
-
+*/
 
 
 module.exports = router;

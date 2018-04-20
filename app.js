@@ -10,7 +10,7 @@ var routes = require('./routes/index');
 var curso = require('./app/models/curso');
 
 
-mongoose.connect('mongodb://localhost:27017/PP2')
+mongoose.connect('mongodb://localhost:27017/GPP')
 
 app.use(cors());
 app.use(morgan('combined'));
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use('/static', express.static('uploads'));
 
-var port = process.env.PORT || 8050;
+var port = process.env.PORT || 8010;
 
 
 
