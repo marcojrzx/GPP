@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 //var Incidencia= require('../app/models/maquina');
 var Producto = require('../app/models/producto');
 var Categoria = require('../app/models/categoria');
+var Lista = require('../app/models/lista');
 
 
 var cron = require('cron');
@@ -155,6 +156,60 @@ router.route('/categoria')
       });
 
   });
+
+
+  router.route('/lista')
+      .post( function(req, res){
+        console.log('en ruta');
+        console.log(req.body);
+        var lista = new Lista();
+        console.log(req.body.productos);
+                    /*lista.idEtapa = req.body.idEtapa;
+                    lista.idGrado = req.body.idGrado;
+                    var arreglo2 = [];
+                    var arregloSub = {nombreProducto: req.body.nombreProducto[0], descripcionProducto: req.body.descripcionProducto[0], categoriaProducto: req.body.categoriaProducto[0], subcategoriaID: req.body.subcategoriaID[0], precioProducto:req.body.precioProducto[0] };
+
+
+                    arreglo2.push(arregloSub);
+                    categoria.subcategoria = arreglo2;
+                    //console.log(req.body);
+                    console.log('arreglo');
+                    console.log(arregloSub);
+                    console.log('arreglo2 ');
+                    console.log(arreglo2);
+                    /*producto.categoria = req.body.categoria;
+                    producto.precio = req.body.precio;
+                    producto.descripcion = req.body.descripcion;
+                    producto.tamanio = req.body.precio;
+
+                    /***mampInicio****/
+                  /*  categoria.save(function(err,rest){
+                      if(err){
+                        res.send("Error al guardar el producto"+err);
+                      }else {
+                       console.log("guardada categoria");
+                      }
+                    });
+         */
+        res.json('categoria');
+
+     });
+     /*router.route('/lista/:id')
+     .get( function(req, res){
+       console.log('en ruta');
+
+       Categoria.find({"categoriaID": req.params.id,}, function(err, categoria){
+             if(err){
+              res.send(err);
+              console.log('errooorr');
+            }
+            res.json(categoria);
+
+        });
+
+    });*/
+
+
 
 router.route('/categoria')
 .get( function(req, res){
