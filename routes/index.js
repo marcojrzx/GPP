@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 //var Incidencia= require('../app/models/maquina');
 var Producto = require('../app/models/producto');
+var Categoria = require('../app/models/categoria');
 
 
 var cron = require('cron');
@@ -88,7 +89,7 @@ router.route('/producto')
                     }
                   });
 
-      res.json('curso guardado');
+      res.json('producto guardado');
 
    })
    .get( function(req, res){
@@ -103,6 +104,71 @@ router.route('/producto')
 
   })
 });
+
+// CREA UN producto //
+router.route('/categoria')
+    .post( function(req, res){
+      console.log('en ruta');
+      console.log(req.body);
+      var categoria = new Categoria();
+                  categoria.nombreCategoria = req.body.nombreCategoria;
+                  categoria.categoriaID = req.body.categoriaID;
+                  var arreglo2 = [];
+                  var arregloSub = {nombreSubCategoria: req.body.nombresubcategoria[0], subcategoriaID: req.body.subcategoriaid[0]};
+
+
+                  arreglo2.push(arregloSub);
+                  categoria.subcategoria = arreglo2;
+                  //console.log(req.body);
+                  console.log('arreglo');
+                  console.log(arregloSub);
+                  console.log('arreglo2 ');
+                  console.log(arreglo2);
+                  /*producto.categoria = req.body.categoria;
+                  producto.precio = req.body.precio;
+                  producto.descripcion = req.body.descripcion;
+                  producto.tamanio = req.body.precio;
+
+                  /***mampInicio****/
+                  categoria.save(function(err,rest){
+                    if(err){
+                      res.send("Error al guardar el producto"+err);
+                    }else {
+                     console.log("guardada categoria");
+                    }
+                  });
+
+      res.json('categoria');
+
+   });
+   router.route('/categoria/:id')
+   .get( function(req, res){
+     console.log('en ruta');
+
+     Categoria.find({"categoriaID": req.params.id,}, function(err, categoria){
+           if(err){
+            res.send(err);
+            console.log('errooorr');
+          }
+          res.json(categoria);
+
+      });
+
+  });
+
+router.route('/categoria')
+.get( function(req, res){
+  Categoria.find({}, function(err, categoria){
+        if(err){
+         res.send(err);
+         console.log('errooorr');
+       }
+       res.json(categoria);
+
+   });
+});
+
+
 // LOGUEO usuario
 /*router.route('/usuarioLog')
     .post( function(req, res){
@@ -138,72 +204,6 @@ router.route('/producto')
 
 
       })
-
-
-// CREA UN usuario  //
-router.route('/usuario')
-    .post( function(req, res){
-      console.log('en ruta');
-      console.log(req.body);
-      console.log(req.params.id);
-      var usuario = new Usuario();
-                  usuario.nombre = req.body.nombre;
-                  usuario.pass = req.body.pass;
-                  usuario.correo = req.body.correo;
-                  usuario.tipo = req.body.tipo;
-
-                  /***mampInicio****/
-              /*    usuario.save(function(err,rest){
-                    if(err){
-                      res.send("Error al guardar el usuario"+err);
-                    }else {
-                     console.log(" usuario guardado ");
-                    }
-                  });
-
-      res.json('usuario guardado');
-
-   })
-   .get( function(req, res){
-     console.log('en ruta');
-     Usuario.find({ tipo: { $ne: 1 } }, function (err, usuario){
-          if(err){
-            res.send(err);
-            console.log('errooorr');
-          }
-          res.json(usuario);
-
-
-  })
-});
-
-router.route('/usuarioCurso/:id')
-    .post( function(req, res){
-      console.log('en ruta usuarioCurso');
-      console.log(req.body);
-      console.log(req.params.id);
-      Usuario.update({_id: req.params.id },{ $set: { "prueba": req.body.curso } } , function (err, usuario){
-       if(err){
-         res.send(err);
-         console.log('errooorr');
-       }
-       res.json('usuario guardado');
-     });
-
-
-   })
-   .get( function(req, res){
-     console.log('en ruta');
-     Usuario.find(function (err, usuario){
-          if(err){
-            res.send(err);
-            console.log('errooorr');
-          }
-          res.json(usuario);
-
-
-  })
-});
 
 
 */
