@@ -67,10 +67,53 @@ router.get('/', function(req, res){
      res.json({message: 'Bienvenido a nuestra api pG'});
   });
 
+//RUTA DE PRUEBA EXPRESIONES REGULARES
 
+router.route('/producto(/idC/:id)?(/idSC/:ids)?')
+.get( function(req, res){
+  console.log('REGEX');
+  if (req.params.id) {
+    console.log(req.params.id);
+    if (req.params.ids) {
+      console.log(req.params.ids);
+      Producto.find({"categoria": req.params.id, "subCategoria": req.params.ids }, function (err, curso){
+           if(err){
+             res.send(err);
+             console.log('errooorr');
+           }
+           res.json(curso);
+    })
+
+  }else{
+
+    Producto.find({"categoria": req.params.id }, function (err, curso){
+         if(err){
+           res.send(err);
+           console.log('errooorr');
+         }
+         res.json(curso);
+  })
+
+  }
+}else{
+
+  Producto.find({}, function (err, curso){
+       if(err){
+         res.send(err);
+         console.log('errooorr');
+       }
+       res.json(curso);
+ })
+
+}
+
+
+
+
+});
 
 // CREA UN producto //
-router.route('/producto')
+/*router.route('/producto')
     .post( function(req, res){
       console.log('en ruta');
       console.log(req.body);
@@ -85,7 +128,6 @@ router.route('/producto')
                   producto.cuadricula = req.body.cuadricula;
                   producto.cantidad = req.body.cantidad;
                   producto.marca = req.body.marca;
-                  /***mampInicio****/
                   producto.save(function(err,rest){
                     if(err){
                       res.send("Error al guardar el producto"+err);
@@ -108,7 +150,7 @@ router.route('/producto')
 
 
   })
-});
+});*/
 
 // CREA UN producto //
 router.route('/categoria')
