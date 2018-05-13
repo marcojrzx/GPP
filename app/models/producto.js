@@ -12,7 +12,8 @@ var ProductoSchema = new Schema({
     dibujo: String,
     cantidad: String,
     lomo: String,
-    tipo: String
+    tipo: String,
+    marca: String
 
 });
 module.exports = mongoose.model('Producto', ProductoSchema);
