@@ -77,10 +77,13 @@ router.route('/producto')
       var producto = new Producto();
                   producto.nombre = req.body.nombre;
                   producto.categoria = req.body.categoria;
+                  producto.subCategoria = req.body.subcategoriaID;
                   producto.precio = req.body.precio;
                   producto.descripcion = req.body.descripcion;
                   producto.tamanio = req.body.precio;
-
+                  producto.noHojas = req.body.noHojas;
+                  producto.cuadricula = req.body.cuadricula;
+                  producto.cantidad = req.body.cuadricula;
                   /***mampInicio****/
                   producto.save(function(err,rest){
                     if(err){
@@ -115,16 +118,16 @@ router.route('/categoria')
                   categoria.nombreCategoria = req.body.nombreCategoria;
                   categoria.categoriaID = req.body.categoriaID;
                   var arreglo2 = [];
-                  var arregloSub = {nombreSubCategoria: req.body.nombresubcategoria[0], subcategoriaID: req.body.subcategoriaid[0]};
-
-
+                for (var i = 0; i < req.body.nombreSubCategoria.length; i++) {
+                  var arregloSub = {nombreSubCategoria: req.body.nombreSubCategoria[i], subcategoriaID: req.body.subcategoriaID[i]};
                   arreglo2.push(arregloSub);
+                }
                   categoria.subcategoria = arreglo2;
-                  //console.log(req.body);
+                  /*console.log(req.body);
                   console.log('arreglo');
                   console.log(arregloSub);
                   console.log('arreglo2 ');
-                  console.log(arreglo2);
+                  console.log(arreglo2);*/
                   /*producto.categoria = req.body.categoria;
                   producto.precio = req.body.precio;
                   producto.descripcion = req.body.descripcion;
