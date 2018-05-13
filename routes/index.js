@@ -80,10 +80,11 @@ router.route('/producto')
                   producto.subCategoria = req.body.subcategoriaID;
                   producto.precio = req.body.precio;
                   producto.descripcion = req.body.descripcion;
-                  producto.tamanio = req.body.precio;
+                  producto.tamanio = req.body.tamanio;
                   producto.noHojas = req.body.noHojas;
                   producto.cuadricula = req.body.cuadricula;
-                  producto.cantidad = req.body.cuadricula;
+                  producto.cantidad = req.body.cantidad;
+                  producto.marca = req.body.marca;
                   /***mampInicio****/
                   producto.save(function(err,rest){
                     if(err){
